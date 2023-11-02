@@ -31,7 +31,7 @@ bash scripts/download_replica.sh
 ```
 and you can run ESLAM:
 ```bash
-python -W ignore run.py configs/Replica/room0.yaml
+python -W ignore run.py configs/Replica/office0.yaml
 ```
 The mesh for evaluation is saved as `$OUTPUT_FOLDER/mesh/final_mesh_eval_rec_culled.ply`, where the unseen and occluded regions are culled using all frames.
 
@@ -93,7 +93,7 @@ The final mesh is saved as `$OUTPUT_FOLDER/mesh/final_mesh_culled.ply`.
 To evaluate the average trajectory error. Run the command below with the corresponding config file:
 ```bash
 # An example for room0 of Replica
-python src/tools/eval_ate.py configs/Replica/room0.yaml
+python src/tools/eval_ate.py configs/Replica/office0.yaml
 ```
 
 ### Reconstruction Error
@@ -106,14 +106,16 @@ Then run the `cull_mesh.py` with the following commands to exclude the unseen an
 # An example for room0 of Replica
 # this code should create a culled mesh named 'room0_culled.ply'
 GT_MESH=cull_replica_mesh/room0.ply
+GT_MESH=/home/lidonghao/ROB590research/data/cull_replica_mesh/office0.ply
 python src/tools/cull_mesh.py configs/Replica/room0.yaml --input_mesh $GT_MESH
 ```
 
 Then run the command below. The 2D metric requires rendering of 1000 depth images, which will take some time. Use `-2d` to enable 2D metric. Use `-3d` to enable 3D metric.
 ```bash
-# An example for room0 of Replica
-OUTPUT_FOLDER=output/Replica/room0
+# An example for office0 of Replica
+OUTPUT_FOLDER=/home/lidonghao/ROB590research/results/Replica/eslam/office0
 GT_MESH=cull_replica_mesh/room0_culled.ply
+GT_MESH=/home/lidonghao/ROB590research/data/Replica/cull_replica_meshv2/office0.ply
 python src/tools/eval_recon.py --rec_mesh $OUTPUT_FOLDER/mesh/final_mesh_eval_rec_culled.ply --gt_mesh $GT_MESH -2d -3d
 ```
 
